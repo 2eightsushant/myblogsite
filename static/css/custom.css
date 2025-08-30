@@ -1,0 +1,71 @@
+/* --- General article styling --- */
+.body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 2.5rem;
+  line-height: 1.8;
+}
+
+/* Paragraphs */
+.body p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Lists */
+.body ul,
+.body ol {
+  padding-left: 1.75rem; /* indentation */
+  margin-bottom: 1.5rem;
+}
+
+.body li {
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+}
+
+/* Links */
+.body a {
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.body a:hover {
+  text-decoration: underline;
+}
+
+/* Headers inside posts */
+.body h1, .body h2, .body h3, .body h4 {
+  font-family: 'Fira Code', 'Source Code Pro', monospace; /* coder vibe */
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Improve blockquotes */
+.body blockquote {
+  border-left: 3px solid #00e0ff;
+  padding-left: 1rem;
+  margin-left: 0;
+  margin-right: 0;
+  color: #b0b0b0;
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+}
+
+/* Code blocks */
+.body pre,
+.body code {
+  font-family: 'Fira Code', 'Source Code Pro', monospace;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+/* Post list pages */
+.post-list, section.content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 2.5rem;
+}

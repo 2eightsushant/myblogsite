@@ -1,25 +1,28 @@
-base_url = "https://not-matthias.github.io/apollo/"
-title = "not-matthias"
-description = "This is an example description"
-build_search_index = true
+# -------------------
+# Site Basics
+# -------------------
+base_url = "https://sthasushant.com.np"
+title = "sthasushant"
+description = "AI Engineer | Deep Learning & ML Blog"
 generate_feeds = true
+build_search_index = true
 compile_sass = true
 minify_html = true
-taxonomies = [{ name = "tags" }]
 
-[search]
-include_title = true
-include_description = true
-include_path = true
-include_content = true
-index_format = "elasticlunr_json"
+taxonomies = [
+    { name = "tags" },
+]
+
+[extra.taxonomies]
+sort_by = "page_count"
+reverse = true
 
 [markdown]
 highlight_code = true
 highlight_theme = "css"
 highlight_themes_css = [
   { theme = "ayu-dark", filename = "syntax-theme-dark.css" },
-  { theme = "ayu-light", filename = "syntax-theme-light.css" },
+  { theme = "ayu-light", filename = "syntax-theme-light.css" }
 ]
 
 [extra]
@@ -31,34 +34,35 @@ fancy_code = true
 dynamic_note = true           # a note that can be toggled
 mathjax = true
 mathjax_dollar_inline_enable = true
-repo_url = "https://github.com/not-matthias/apollo/tree/main/content/"
+repo_url = "https://github.com/2eightsushant/"
 
 menu = [
-    { name = "/posts", url = "/posts", weight = 1 },
-    { name = "/projects", url = "/projects", weight = 2 },
-    { name = "/tags", url = "/tags", weight = 3 },
+    { name = "Posts", url = "/posts", weight = 1 }
 ]
 
 socials = [
-    { name = "twitter", url = "https://twitter.com/not_matthias", icon = "twitter" },
-    { name = "github", url = "https://github.com/not-matthias/", icon = "github" },
+    { name = "x", url = "https://x.com/2eightsushant", icon = "twitter" },
+    { name = "github", url = "https://github.com/2eightsushant/", icon = "github" },
+    { name = "linkedin", url = "https://linkedin.com/2eightsushant/", icon = "linkedin" }
 ]
+
 
 stylesheets = [
-    # "custom.css"    # at /static/custom.css
+    # "custom.css"
 ]
 
-[extra.taxonomies]
-sort_by = "page_count"         # e.g. name, page_count
-reverse = true
+
+[search]
+include_title = true
+include_description = true
+include_path = true
+include_content = true
+index_format = "elasticlunr_json"
+
 
 [extra.analytics]
 enabled = false
 
 [extra.analytics.goatcounter]
 user = "your_user"
-host = "example.com" # default= goatcounter.com
-
-[extra.analytics.umami]
-website_id = "43929cd1-1e83...."
-host_url = "https://stats.mywebsite.com" # default: https://api-gateway.umami.dev/
+host = "example.com"

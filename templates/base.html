@@ -4,6 +4,12 @@
 <html lang="en" class="dark light">
 
     {% include "partials/header.html" %}
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ config.title }}</title>
+        {% include "partials/header.html" %}
+        <link rel="stylesheet" href="{{ get_url(path="css/custom.css") }}">
+    </head>
 
     <body>
         <div class="left-content">
