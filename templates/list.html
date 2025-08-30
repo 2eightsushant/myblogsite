@@ -1,0 +1,11 @@
+{# themes/apollo/templates/tags/list.html #}
+{% extends "base.html" %}
+
+{% block main_content %}
+<h1>All Tags</h1>
+<ul>
+    {% for tag in tags %}
+        <li><a href="{{ get_taxonomy_url('tags', tag) }}">{{ tag }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock main_content %}
