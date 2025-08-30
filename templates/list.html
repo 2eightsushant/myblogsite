@@ -4,7 +4,7 @@
 <h1>All Tags</h1>
 <ul>
     {% for tag in tags %}
-        <li><a href="{{ get_taxonomy_url(tag) }}">{{ tag }}</a></li>
+        <li><a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">{{ tag }}</a></li>
     {% endfor %}
 </ul>
 {% endblock main_content %}
