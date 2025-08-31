@@ -1,6 +1,3 @@
-# -------------------
-# Site Basics
-# -------------------
 base_url = "https://sthasushant.com.np"
 title = "sthasushant"
 description = "AI Engineer | Deep Learning & ML Blog"
@@ -30,9 +27,9 @@ toc = true
 use_cdn = false
 generate_tags = false
 favicon = "/icon/favicon.png"
-theme = "toggle"              # light, dark, auto, toggle
+theme = "toggle"
 fancy_code = true
-dynamic_note = true           # a note that can be toggled
+dynamic_note = true
 mathjax = true
 mathjax_dollar_inline_enable = true
 repo_url = "https://github.com/2eightsushant/"
@@ -44,7 +41,7 @@ menu = [
 socials = [
     { name = "x", url = "https://x.com/2eightsushant", icon = "twitter" },
     { name = "github", url = "https://github.com/2eightsushant/", icon = "github" },
-    { name = "linkedin", url = "https://linkedin.com/2eightsushant/", icon = "linkedin" }
+    { name = "linkedin", url = "https://www.linkedin.com/in/2eightsushant/", icon = "linkedin" }
 ]
 
 
@@ -63,7 +60,3 @@ index_format = "elasticlunr_json"
 
 [extra.analytics]
 enabled = false
-
-[extra.analytics.goatcounter]
-user = "your_user"
-host = "example.com"
