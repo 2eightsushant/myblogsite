@@ -3,8 +3,10 @@
 {% block main_content %}
 <h1>All Tags</h1>
 <ul>
-    {% for tag in tags %}
-        <li><a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">{{ tag }}</a></li>
+    {% for term in terms %}
+        <li>
+            <a href="{{ term.permalink }}">{{ term.name }}</a> ({{ term.pages | length }})
+        </li>
     {% endfor %}
 </ul>
 {% endblock main_content %}
