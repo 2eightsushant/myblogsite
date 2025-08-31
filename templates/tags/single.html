@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+<h1>Posts tagged "{{ term.name }}"</h1>
+
+<ul>
+    {% for page in term.pages %}
+        <li>
+            <a href="{{ page.permalink }}">{{ page.title }}</a>
+            <small>— {{ page.date | date(format="%B %d, %Y") }}</small>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock main_content %}
