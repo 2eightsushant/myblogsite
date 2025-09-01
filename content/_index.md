@@ -32,7 +32,7 @@ template = "homepage.html"
     font-size: 1rem;
     font-style: italic;
     margin-top: 2rem;
-    color: #9c3c6cff;
+    color: #d43636ff;
     font-family: 'Fira Code', 'Source Code Pro', monospace;
     font-weight: 600;
 }

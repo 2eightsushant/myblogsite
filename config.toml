@@ -2,7 +2,7 @@ base_url = "https://sthasushant.com.np"
 title = "sthasushant"
 description = "AI Engineer | Deep Learning & ML Blog"
 generate_feeds = true
-build_search_index = true
+build_search_index = false
 compile_sass = true
 minify_html = true
 
@@ -51,10 +51,10 @@ stylesheets = [
 
 
 [search]
-include_title = true
-include_description = true
-include_path = true
-include_content = true
+include_title = false
+include_description = false
+include_path = false
+include_content = false
 index_format = "elasticlunr_json"
 
 
