@@ -26,7 +26,7 @@ highlight_themes_css = [
 toc = true
 use_cdn = false
 generate_tags = false
-favicon = "/icon/favicon.png"
+favicon = "/icons/moon.svg"
 theme = "toggle"
 fancy_code = true
 dynamic_note = true
@@ -59,4 +59,8 @@ index_format = "elasticlunr_json"
 
 
 [extra.analytics]
-enabled = false
+enabled = true
+
+[extra.analytics.goatcounter]
+user = "2eightsushant"
+host = "https://sthasushant.com.np"
