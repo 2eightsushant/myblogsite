@@ -50,6 +50,12 @@ stylesheets = [
 ]
 
 
+[extra.analytics]
+enabled = true
+
+[extra.analytics.goatcounter]
+user = "2eightsushant"
+
 [search]
 include_title = false
 include_description = false
@@ -57,10 +63,3 @@ include_path = false
 include_content = false
 index_format = "elasticlunr_json"
 
-
-[extra.analytics]
-enabled = true
-
-[extra.analytics.goatcounter]
-user = "2eightsushant"
-host = "goatcounter.com"
