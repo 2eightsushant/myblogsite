@@ -32,7 +32,6 @@ fancy_code = true
 dynamic_note = true
 mathjax = true
 mathjax_dollar_inline_enable = true
-repo_url = "https://github.com/2eightsushant/"
 
 menu = [
     { name = "Posts", url = "/posts", weight = 1 }
