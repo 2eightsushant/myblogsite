@@ -62,5 +62,5 @@ index_format = "elasticlunr_json"
 enabled = true
 
 [extra.analytics.goatcounter]
-user = "2eightsushant.goatcounter.com"
-host = "https://sthasushant.com.np"
+user = "2eightsushant"
+host = "goatcounter.com"
