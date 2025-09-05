@@ -34,14 +34,17 @@ So the challenge isn’t just efficiency. It’s extrapolation: how to let a mod
 At a high level, InfLLM makes two key moves:
 1. It processes the input chunk by chunk instead of all at once.
 2. It offloads old tokens into an external memory, then brings back only the relevant parts when needed.
+
 ### Past contexts
 At each step, past key-value (KV) pairs from attention layers are categorized into:
 - **Initial tokens (I)**: The first few tokens (e.g., system prompts), always included as a fixed anchor.
 - **Local tokens (L)**: Recent tokens within the sliding window (e.g., 4K tokens), kept on GPU for quick access.
 - **Evicted tokens (E)**: Older tokens offloaded to external context memory (primarily on CPU to save GPU space).
 This structure allows InfLLM to keep the model focused locally while still having access to the entire history when needed.
+
 ## Memory Units and Representative
 Evicted tokens (E) are gropued into block-level memory units, with each unit containing a fixed number of contiguous tokens ($l_{bs}$=128). Within each block, only a few representative tokens are kept chosen based on their influence on local attention.
+
 ### Representative Score
 For the $m$-th token in a unit, the representative score is:
 $$r_m = \frac{1}{l_L} \sum_{j=1}^{l_L} q_{m+j} \cdot k_m$$
@@ -49,6 +52,7 @@ where,
 - $q_{m+j}$: query bector of token in the local window of size $l_L$
 - $k_m$: key vector of the $m$-th evicted token
 This averages the attention influence of the token on subsequent local queries, identifying semantically important tokens. Simply if a token strongly interacts with many local queries, it’s important enough to represent its block.
+
 ### Selecting Representatives
 For a block $B = \{ (k_j^B, v_j^B) \}{j=1}^{l_{bs}}$​​:
 - Select the top $r_k$​ tokens (e.g., $r_k$​​=4) by highest $r_m$​​.
@@ -65,6 +69,7 @@ where,
 - $l_X$: Length of current chunk.
 
 Blocks with high similarity are considered relevant. InfLLM selects the top $k_m$ blocks and loads their full KV pairs (not just the representatives) back into GPU memory.
+
 ## Building the Current Cache
 To compute the next step, InfLLM constructs a working cache:
 $$C = \text{Concat}(I, f(X, E), L)$$
