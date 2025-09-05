@@ -30,6 +30,7 @@ So the challenge isn’t just efficiency. It’s extrapolation: how to let a mod
 
 ## How InfLLM Works
 <img src="/images/infllm_v1.png" alt="alt text">
+
 At a high level, InfLLM makes two key moves:
 1. It processes the input chunk by chunk instead of all at once.
 2. It offloads old tokens into an external memory, then brings back only the relevant parts when needed.
