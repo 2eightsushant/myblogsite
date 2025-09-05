@@ -29,7 +29,7 @@ At the core of the Transformer lie attention mechanism, which scales quadratical
 So the challenge isn’t just efficiency. It’s extrapolation: how to let a model pre-trained on short contexts handle arbitrarily long ones without retraining. InfLLM tackles this by extending sliding window attention with a retrieval-based memory that selectively reactivates distant but relevant information.
 
 ## How InfLLM Works
-![alt text](images/infllm_v1.png)
+<img src="/images/infllm_v1.png" alt="alt text">
 At a high level, InfLLM makes two key moves:
 1. It processes the input chunk by chunk instead of all at once.
 2. It offloads old tokens into an external memory, then brings back only the relevant parts when needed.
