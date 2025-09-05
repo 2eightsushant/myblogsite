@@ -3,7 +3,7 @@ title = "A note on InfLLM v1"
 date = "2024-09-05"
 
 [taxonomies]
-tags=["attention","swa","rag","sparsity","tokens"]
+tags=["attention","swa","rag","sparsity","tokens","infllm","minicpm"]
 
 [extra]
 comment = true
