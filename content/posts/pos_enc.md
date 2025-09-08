@@ -48,7 +48,9 @@ To break the permutation equivariance and make the attention sensitive to order 
 Introduced in the original Transformer paper [Vaswani et al., 2017], sinusoidal positional encoding assigns a unique, deterministic vector to each token position in a sequence. These encodings are added to the input token embeddings to provide information about the token’s position.
 
 To encode token position $p \in \mathbb{N}$ with embedding dimension $d \in 2\mathbb{N}$, the sinusoidal positional encoding $\text{PE}(p) \in \mathbb{R}^d$ is defined as:
+
 $$\text{PE}_{p,2i} = \sin\left(p \cdot \omega_i\right), \quad \text{PE}_{p,2i+1} = \cos\left(p \cdot \omega_i\right), \quad \text{for } 0 \le i < d/2$$
+
 where the frequencies $\omega_i \in \mathbb{R}$ are logarithmically scaled:
 $$\omega_i = 10000^{-2i/d}$$
 This yields a position-dependent encoding vector where each pair of dimensions corresponds to a sinusoid at a distinct wavelength.
