@@ -259,10 +259,10 @@ To represent the entire rotation in $\mathbb{R}^d$ for token position $m$, we co
 $$
 R_{\theta,i} =
 \begin{pmatrix}
-R_{\theta_1} & 0 & 0 & \cdots & 0 \\
-0 & R_{\theta_2} & 0 & \cdots & 0 \\
-0 & 0 & R_{\theta_3} & \cdots & 0 \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
+R_{\theta_1} & 0 & 0 & \cdots & 0 \\\\
+0 & R_{\theta_2} & 0 & \cdots & 0 \\\\
+0 & 0 & R_{\theta_3} & \cdots & 0 \\\\
+\vdots & \vdots & \vdots & \ddots & \vdots \\\\
 0 & 0 & 0 & \cdots & R_{\theta_{d/2}}
 \end{pmatrix}
 $$
