@@ -49,7 +49,7 @@ Introduced in the original Transformer paper [Vaswani et al., 2017], sinusoidal 
 
 To encode token position $p \in \mathbb{N}$ with embedding dimension $d \in 2\mathbb{N}$, the sinusoidal positional encoding $\text{PE}(p) \in \mathbb{R}^d$ is defined as:
 
-$$\text{PE}_{p,2i} = \sin\left(p \cdot \omega_i\right), \quad \text{PE}_{p,2i+1} = \cos\left(p \cdot \omega_i\right), \quad \text{for } 0 \le i < d/2$$
+$$\text{PE}_{p,2i} = \sin\left(p \cdot \omega_i\right), \quad \text{PE}_{p,2i+1} = \cos\left(p \cdot \omega_i\right), \quad \text{for } 0 \leq i < \frac{d}{2}$$
 
 where the frequencies $\omega_i \in \mathbb{R}$ are logarithmically scaled:
 $$\omega_i = 10000^{-2i/d}$$
