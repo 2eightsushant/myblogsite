@@ -49,7 +49,11 @@ Introduced in the original Transformer paper [Vaswani et al., 2017], sinusoidal 
 
 To encode token position $p \in \mathbb{N}$ with embedding dimension $d \in 2\mathbb{N}$, the sinusoidal positional encoding $\text{PE}(p) \in \mathbb{R}^d$ is defined as:
 
-$$\text{PE}_{p,2i} = \sin\left(p \cdot \omega_i\right), \quad \text{PE}_{p,2i+1} = \cos\left(p \cdot \omega_i\right), \quad \text{for } 0 \leq i < \frac{d}{2}$$
+$$
+\mathrm{PE}_{p,2i} = \sin\!\left(p \cdot \omega_i\right), \quad
+\mathrm{PE}_{p,2i+1} = \cos\!\left(p \cdot \omega_i\right), \quad
+\text{for } 0 \leq i < \tfrac{d}{2}
+$$
 
 where the frequencies $\omega_i \in \mathbb{R}$ are logarithmically scaled:
 $$\omega_i = 10000^{-2i/d}$$
@@ -85,12 +89,13 @@ $$
 So,
 $$\text{PE}(p + \Delta) = R(\Delta) \cdot \text{PE}(p)$$
 where $R(\Delta) \in \mathbb{R}^{d \times d}$ is a block-diagonal rotation matrix, with each $2 \times 2$ block rotating by $\omega_i \Delta$.
+
 [https://kazemnejad.com/blog/transformer_architecture_positional_encoding/]
 [https://blog.timodenk.com/linear-relationships-in-the-transformers-positional-encoding/]
 
 Shifting position by $\Delta$ corresponds to rotating the embedding vector in each frequency subspace. These rotations are linear, allowing MLPs or attention to model shifts in position via linear operations on encodings. This property is central to RoPE as we see later.
 
-Another variant of absolute positional embedding(APE)[Vaswani][https://proceedings.mlr.press/v119/liu20n/liu20n.pdf] is the learnable APE, in which each position $p$ in the input sequence is assigned a trainable vector $\mathbf{p}_p \in \mathbb{R}^{d}$, where $d$ is the embedding dimension. These positional embeddings are learned during training and added element wise to the token embeddings,
+Another variant of absolute positional embedding(APE) [Vaswani](https://proceedings.mlr.press/v119/liu20n/liu20n.pdf) is the learnable APE, in which each position $p$ in the input sequence is assigned a trainable vector $\mathbf{p}_p \in \mathbb{R}^{d}$, where $d$ is the embedding dimension. These positional embeddings are learned during training and added element wise to the token embeddings,
 $$\mathbf{x}_p = \mathbf{e}_p + \mathbf{p}_p$$
 where $\mathbf{e}_p$ is the token embedding at position $p$, and $\mathbf{x}_p$ is the resulting position aware input. However, because each $\mathbf{p}_p$ is tied to a specific position, learnable APEs do not generalize well to sequences longer than those seen during training, limiting extrapolation capability at inference. Moreover, it also introduces full $d$-dimensional paramater vector per position, increasing the model's memory footprint. 
 [Vaswani] experimented with both learned and SPE and observed nearly identical results. They opted for the sinusoidal version due to its ability to generalize to sequence lengths longer than those encountered during training. Similarly, [Wang & Chen (2020)] found that learnable positional embeddings do not consistently outperform SPE. Nevertheless, prominent models like BERT and GPT have adopted learnable PE.
@@ -158,8 +163,23 @@ $V_t = x_t W^V \in \mathbb{R}^{1 \times d}$
 
 Such that we cache the keys and values over previous steps in:
 
-$$\text{Key cache: } \mathcal{K}_{1:t-1} = \begin{bmatrix} K_1 \\ K_2 \\ \cdots \\ K{t-1} \end{bmatrix} \in \mathbb{R}^{(t-1) \times d}$$
-$$\text{Value cache: } \mathcal{V}_{1:t-1} = \begin{bmatrix} V_1 \\ V_2 \\ \cdots \\ V{t-1} \end{bmatrix} \in \mathbb{R}^{(t-1) \times d}$$
+$$
+\text{Key cache:}\quad 
+\mathcal{K}_{1:t-1} =
+\begin{bmatrix}
+K_1 \\ K_2 \\ \cdots \\ K_{t-1}
+\end{bmatrix}
+\in \mathbb{R}^{(t-1) \times d}
+$$
+
+$$
+\text{Value cache:}\quad 
+\mathcal{V}_{1:t-1} =
+\begin{bmatrix}
+V_1 \\ V_2 \\ \cdots \\ V_{t-1}
+\end{bmatrix}
+\in \mathbb{R}^{(t-1) \times d}
+$$
 
 At decoding step $t$, we attend to cached $\{\mathcal{K}, \mathcal{V}\}_{j=1}^{t-1}$ and compute:
 $$e_{tj} = Q_t^\top \mathcal{K}_j$$
