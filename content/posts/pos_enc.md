@@ -181,13 +181,33 @@ V_1 \\ V_2 \\ \cdots \\ V_{t-1}
 \in \mathbb{R}^{(t-1) \times d}
 $$
 
-At decoding step $t$, we attend to cached $\{\mathcal{K}, \mathcal{V}\}_{j=1}^{t-1}$ and compute:
-$$e_{tj} = Q_t^\top \mathcal{K}_j$$
-$$\alpha_{tj} = \text{softmax}(e_{tj})$$
-$$y_t = \sum_{j=1}^{t-1} \alpha_{tj} \mathcal{V}_j$$
+At decoding step $t$, we attend to cached 
+$\{\mathcal{K}, \mathcal{V}\}_{j=1}^{t-1}$ and compute:
+
+$$
+e_{tj} = Q_t^\top \mathcal{K}_j
+$$
+
+$$
+\alpha_{tj} = \mathrm{softmax}(e_{tj})
+$$
+
+$$
+y_t = \sum_{j=1}^{t-1} \alpha_{tj} \mathcal{V}_j
+$$
+
 However in RPE, we add position-dependent bias $R_{j - t}$, the attention score becomes:
-$$e_{tj}^{\text{RPE}} = \frac{Q_t K_j^\top + Q_t R_{j - t}^\top}{\sqrt{d}}$$
-The term $Q_t R_{j - t}^\top$ depends on the relative position between query $t$ and each key $j<t$ ,Since $t$ increases at every decoding step, the relative position $j - t$ changes making caching impossible, so it must be recomputed for each pair $(j, t)$ at every step violating the principle of KV caching. In simple, RPE introduces position-dependent bias based on relative offset $j - t$, but offset changes at every time step, so cached keys can’t be reused without recomputing the position bias.
+
+$$
+e_{tj}^{\mathrm{RPE}} = \frac{Q_t K_j^\top + Q_t R_{j - t}^\top}{\sqrt{d}}
+$$
+
+The term $Q_t R_{j - t}^\top$ depends on the relative position between query $t$ and each key $j<t$. 
+Since $t$ increases at every decoding step, the relative position $j - t$ changes, making caching impossible. 
+Thus it must be recomputed for each pair $(j, t)$ at every step, violating the principle of KV caching. 
+
+In simple terms, RPE introduces position-dependent bias based on relative offset $j - t$, 
+but that offset changes at every time step, so cached keys can’t be reused without recomputing the position bias.
 
 Although RPE addresses the relative positional factor, it suffers from extrapolation and KV caching issues.
 
