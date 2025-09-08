@@ -257,7 +257,9 @@ $$ = \begin{pmatrix} x_{2i-1} \cos(m\theta_i) - x_{2i} \sin(m\theta_i) \\ x_{2i-
 where $\theta_i = 10000−2(i−1)/d, \quad i∈[1,2,...,d/2]$ 
 
 To represent the entire rotation in $\mathbb{R}^d$ for token position $m$, we construct a block-diagonal matrix, where each block corresponds to the 2D rotation matrix for a pair of dimensions. For d-dimensional space, the rotation matrix $R_{\theta,i}$ can be written as:
-$$R_{\theta,i} = \begin{pmatrix} R_{\theta_1} & 0 & 0 & \cdots & 0 \\ 0 & R_{\theta_2} & 0 & \cdots & 0 \\ 0 & 0 & R_{\theta_3} & \cdots & 0 \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & 0 & \cdots & R_{\theta_{d/2}} \end{pmatrix}$$
+$$
+R_{\theta,i} = \operatorname{diag}\!\big(R_{\theta_1}, R_{\theta_2}, \dots, R_{\theta_{d/2}}\big)
+$$
 where each $R_{\theta_i}$ is a 2D rotation matrix for the corresponding $i^{th}$ pair of dimensions.
 
 We can see that there is no constraint that $m$ must be $\leq L$. Since $\cos(m \theta),\sin(m \theta)$ is well defined for any $m \in \mathbb{N}$. In other word, even at positions longer than seen in training, for example $m > 512$, RoPE can still produce a rotation. The rotation matrix entries satisfy:
