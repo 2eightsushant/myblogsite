@@ -246,7 +246,6 @@ $$e^{i n \theta} = \cos(n \theta) + i \sin(n \theta)$$
 
 It essentially represents a 2D rotation. We can represent it in 2D rotation matrix that rotates a vector by an angle $m\theta$ is given by:
 $$R(m\theta) = \begin{bmatrix} \cos(m\theta) & -\sin(m\theta) \\ \sin(m\theta) & \cos(m\theta) \end{bmatrix}$$
-Figure rot mat>
 
 RoPE does not rotate the entire vector at once but cleverly splits the d-dimensional vector space into $d/2$ pairs or sub-spaces and combine them to avoid the complexities of high dimension.
 Consider embedding vector in $\mathbb{R}^d$ (where d is even) with token's absolute position as $m \in \mathbb{N}$, then the embedding vector space can be divided into $d/2$ pairs of 2D subspaces. Such that each pair of dimensions is independently rotated by a corresponding angle $\theta_i$. Specifically, for each pair $(x_{2i-1}, x_{2i})$, the rotation is given by a 2D rotation matrix $R_{\theta_i}$:
@@ -258,7 +257,14 @@ where $\theta_i = 10000−2(i−1)/d, \quad i∈[1,2,...,d/2]$
 
 To represent the entire rotation in $\mathbb{R}^d$ for token position $m$, we construct a block-diagonal matrix, where each block corresponds to the 2D rotation matrix for a pair of dimensions. For d-dimensional space, the rotation matrix $R_{\theta,i}$ can be written as:
 $$
-R_{\theta,i} = \operatorname{diag}\!\big(R_{\theta_1}, R_{\theta_2}, \dots, R_{\theta_{d/2}}\big)
+R_{\theta,i} =
+\begin{pmatrix}
+R_{\theta_1} & 0 & 0 & \cdots & 0 \\
+0 & R_{\theta_2} & 0 & \cdots & 0 \\
+0 & 0 & R_{\theta_3} & \cdots & 0 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 0 & 0 & \cdots & R_{\theta_{d/2}}
+\end{pmatrix}
 $$
 where each $R_{\theta_i}$ is a 2D rotation matrix for the corresponding $i^{th}$ pair of dimensions.
 
