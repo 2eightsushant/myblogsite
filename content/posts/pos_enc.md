@@ -167,7 +167,10 @@ $$
 \text{Key cache:}\quad 
 \mathcal{K}_{1:t-1} =
 \begin{bmatrix}
-K_1 \\ K_2 \\ \cdots \\ K_{t-1}
+K_1 \\ 
+K_2 \\ 
+\vdots \\ 
+K_{t-1}
 \end{bmatrix}
 \in \mathbb{R}^{(t-1) \times d}
 $$
@@ -176,7 +179,10 @@ $$
 \text{Value cache:}\quad 
 \mathcal{V}_{1:t-1} =
 \begin{bmatrix}
-V_1 \\ V_2 \\ \cdots \\ V_{t-1}
+V_1 \\ 
+V_2 \\ 
+\vdots \\ 
+V_{t-1}
 \end{bmatrix}
 \in \mathbb{R}^{(t-1) \times d}
 $$
