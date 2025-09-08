@@ -106,8 +106,10 @@ $q_p = W_Q(x_p + \text{PE}(p))$,
 $k_q = W_K(x_q + \text{PE}(q))$
 
 The dot product is,
+
 $\langle q_p, k_q \rangle = \langle W_Q(x_p + \text{PE}(p)),\, W_K(x_q + \text{PE}(q)) \rangle$
 $= \langle W_Q x_p, W_K x_q \rangle . \langle W_Q x_p, W_K \text{PE}(q) \rangle . \langle W_Q \text{PE}(p), W_K x_q \rangle . \langle W_Q \text{PE}(p), W_K \text{PE}(q) \rangle$
+
 We can see other than the last term depends on absolute positions and learned embeddings rather than relative position. The additive mix with token embeddings and projection layers breaks the relative structure and looses the relative information.
 
 Instead of encoding absolute position $i$ into each token, define attention to depend explicitly on the relative offset $r = j - i$. In simple term, the idea is to incorporate relative position directly into the attention mechanism rather than adding it to the input embeddings [Shaw][Raffel et al 2020].
@@ -155,7 +157,10 @@ $K_t = x_t W^K \in \mathbb{R}^{1 \times d}$
 $V_t = x_t W^V \in \mathbb{R}^{1 \times d}$
 
 Such that we cache the keys and values over previous steps in:
-$$\text{Key cache: } \mathcal{K}_{1:t-1} = \begin{bmatrix} K_1 \\ K_2 \\ \cdots \\ K{t-1} \end{bmatrix} \in \mathbb{R}^{(t-1) \times d}$$$$\text{Value cache: } \mathcal{V}_{1:t-1} = \begin{bmatrix} V_1 \\ V_2 \\ \cdots \\ V{t-1} \end{bmatrix} \in \mathbb{R}^{(t-1) \times d}$$
+
+$$\text{Key cache: } \mathcal{K}_{1:t-1} = \begin{bmatrix} K_1 \\ K_2 \\ \cdots \\ K{t-1} \end{bmatrix} \in \mathbb{R}^{(t-1) \times d}$$
+$$\text{Value cache: } \mathcal{V}_{1:t-1} = \begin{bmatrix} V_1 \\ V_2 \\ \cdots \\ V{t-1} \end{bmatrix} \in \mathbb{R}^{(t-1) \times d}$$
+
 At decoding step $t$, we attend to cached $\{\mathcal{K}, \mathcal{V}\}_{j=1}^{t-1}$ and compute:
 $$e_{tj} = Q_t^\top \mathcal{K}_j$$
 $$\alpha_{tj} = \text{softmax}(e_{tj})$$
