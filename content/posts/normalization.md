@@ -1,6 +1,6 @@
 +++
 title = "A Note on Normalization"
-date = "2024-09-08"
+date = "2024-09-14"
 
 [taxonomies]
 tags=["normalization","batchnorm","layernorm","rmsnorm"]
@@ -21,13 +21,28 @@ However, whitening all features jointly is computationally intensive and often n
 	where $\mu^k$ and $(\sigma^k)^2$ are the mean and variance of feature $k$ over a mini-batch, and $\epsilon$ is a small constant for numerical stability. To maintain the network's expressive power, BN introduces learnable parameters $\gamma^k$ and $\beta^k$ which scale and shift the normalized value, applying an affine transformation:
 	$$y^k = \gamma^k \hat{x}^k + \beta^k$$
 	These parameters, optimized during training, allow the network to recover the original feature distribution if necessary.
-2. Mini-Batch Statistics
-	BN estimates the mean and variance using mini-batches. For a mini-batch $\mathcal{B} = \{\mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_m\}$, the normalization for each input $\mathbf{x}_i$ is:
-	$$\text{BN}_{\gamma, \beta}(\mathbf{x}_i) = \gamma \cdot \hat{\mathbf{x}}_i + \beta$$
-	where,
-	$$\hat{\mathbf{x}}_i = \frac{\mathbf{x}_i - \mu_\mathcal{B}}{\sqrt{\sigma_\mathcal{B}^2 + \epsilon}}, \quad
-	\mu_\mathcal{B} = \frac{1}{m} \sum_{i=1}^m \mathbf{x}_i, \quad
-	\sigma_\mathcal{B}^2 = \frac{1}{m} \sum_{i=1}^m (\mathbf{x}_i - \mu_\mathcal{B})^2$$
+2. Mini-Batch Statistics  
+    BN estimates the mean and variance using mini-batches. For a mini-batch  
+    $\mathcal{B} = \{\mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_m\}$,  
+    the normalization for each input $\mathbf{x}_i$ is:  
+
+    $$
+    \text{BN}_{\gamma, \beta}(\mathbf{x}_i) = \gamma \cdot \hat{\mathbf{x}}_i + \beta
+    $$  
+
+    where  
+
+    $$
+    \hat{\mathbf{x}}_i = \frac{\mathbf{x}_i - \mu_\mathcal{B}}{\sqrt{\sigma_\mathcal{B}^2 + \epsilon}}
+    $$  
+
+    $$
+    \mu_\mathcal{B} = \frac{1}{m} \sum_{i=1}^m \mathbf{x}_i
+    $$  
+
+    $$
+    \sigma_\mathcal{B}^2 = \frac{1}{m} \sum_{i=1}^m (\mathbf{x}_i - \mu_\mathcal{B})^2
+    $$
 	
 	These statistics are differentiable, enabling integration with backpropagation.
 
