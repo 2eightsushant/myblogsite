@@ -32,13 +32,17 @@ However, whitening all features jointly is computationally intensive and often n
 
     where  
 
-	$$ \hat{\mathbf{x}}_i = \frac{\mathbf{x}_i - \mu_{\mathcal{B}}}{\sqrt{\sigma_{\mathcal{B}}^2 + \epsilon}} $$
+	$$
+	\hat{\mathbf{x}}_i = \frac{\mathbf{x}_i - \mu_{\mathcal{B}}}{\sqrt{\sigma_{\mathcal{B}}^2 + \epsilon}}
+	$$
 
     $$
     \mu_\mathcal{B} = \frac{1}{m} \sum_{i=1}^m \mathbf{x}_i
     $$  
 
-    $$ \sigma_{\mathcal{B}}^2 = \frac{1}{m} \sum_{i=1}^m \left( \mathbf{x}_i - \mu_{\mathcal{B}} \right)^2 $$
+    $$
+	\sigma_{\mathcal{B}}^2 = \frac{1}{m} \sum_{i=1}^m \left( \mathbf{x}_i - \mu_{\mathcal{B}} \right)^2
+	$$
 	
 	These statistics are differentiable, enabling integration with backpropagation.
 
@@ -112,8 +116,6 @@ In contrast, BN normalizes across the batch dimension (over examples) for each f
 	$$
 
 	Thus, LN is invariant to uniform scaling of the full weight matrix.  
-
-	---
 
 	For pre-activation shifts, adding a constant vector 
 	$\mathbf{b} \in \mathbb{R}^H$ (identical for all neurons) to the pre-activations $\mathbf{z}$ leaves LN invariant for uniform shifts, since the mean and variance adjust accordingly:
