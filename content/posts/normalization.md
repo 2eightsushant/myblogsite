@@ -32,17 +32,13 @@ However, whitening all features jointly is computationally intensive and often n
 
     where  
 
-    $$
-    \hat{\mathbf{x}}_i = \frac{\mathbf{x}_i - \mu_\mathcal{B}}{\sqrt{\sigma_\mathcal{B}^2 + \epsilon}}
-    $$  
+	$$ \hat{\mathbf{x}}_i = \frac{\mathbf{x}_i - \mu_{\mathcal{B}}}{\sqrt{\sigma_{\mathcal{B}}^2 + \epsilon}} $$
 
     $$
     \mu_\mathcal{B} = \frac{1}{m} \sum_{i=1}^m \mathbf{x}_i
     $$  
 
-    $$
-    \sigma_\mathcal{B}^2 = \frac{1}{m} \sum_{i=1}^m (\mathbf{x}_i - \mu_\mathcal{B})^2
-    $$
+    $$ \sigma_{\mathcal{B}}^2 = \frac{1}{m} \sum_{i=1}^m \left( \mathbf{x}_i - \mu_{\mathcal{B}} \right)^2 $$
 	
 	These statistics are differentiable, enabling integration with backpropagation.
 
@@ -69,17 +65,30 @@ In contrast, BN normalizes across the batch dimension (over examples) for each f
 1. Weight re-scaling and re-centering invariance
 	In BN, re-scaling the incoming weights of a single neuron doesn't effect the normalized output, since normalization is performed across the batch dimension. Whereas, LN behaves differently; LN is not invariant to re-scaling of individual weight vectors, i.e., rows of the weight matrix. But it is invariant to uniform re-scaling or shifting of the entire weight matrix.
 	
-	Let $W \in \mathbb{R}^{H \times D}$ be weight matrix at layer $l$, and  $\mathbf{x}_i \in \mathbb R^D$ be the input to the layer for example $i$, then single weight vector scaling on pre‐activation for neuron $j$ is,
-	$$z_{\{i,j\}} = \mathbf{w}_j^\top \mathbf{x}_i$$
-	where $\mathbf{w}_j$ is $j^{th}$ row of $W$.
-	
-	i.e, $\mathbf{w}_j \mapsto \delta\,\mathbf{w}_j$ scales pre-activation $z_{\{i,j\}} \rightarrow \delta\,z_{\{i,j\}}$. 
+	Let $W \in \mathbb{R}^{H \times D}$ be the weight matrix at layer $l$, and $\mathbf{x}_i \in \mathbb{R}^D$ be the input to the layer for example $i$. Then the pre-activation for neuron $j$ is
+	$$
+	z_{ij} = \mathbf{w}_j^\top \mathbf{x}_i,
+	$$
+	where $\mathbf{w}_j$ is the $j$-th row of $W$.
+
+	Scaling $\mathbf{w}_j \mapsto \delta \mathbf{w}_j$ implies that the pre-activation scales as
+	$$
+	z_{ij} \mapsto \delta z_{ij}.
+	$$
 	
 	BN computes statistics over the batch $B$ for each neuron:
 	 $$\mu_j = \frac{1}{B} \sum_{i=1}^B z_{i,j}, \quad \sigma_j^2 = \frac{1}{B} \sum_{i=1}^B (z_{i,j} - \mu_j)^2$$
-$$\hat{z}_{i,j} = \frac{z_{i,j} - \mu_j}{\sqrt{\sigma_j^2 + \epsilon}}$$
-	After scaling, the normalized output $\hat{z}_{i,j}$ 
-	$$\hat{z}_{i,j}’ = \frac{\delta z_{i,j} - \delta \mu_j}{\sqrt{\delta^2 \sigma_j^2 + \epsilon}}  \approx \frac{z_{i,j} - \mu_j}{\sqrt{\sigma_j^2 + \epsilon}} = \hat{z}_{i,j}$$
+	$$
+	\hat{z}_{i,j} = \frac{z_{i,j} - \mu_j}{\sqrt{\sigma_j^2 + \epsilon}}
+	$$
+
+	After scaling, the normalized output is
+	$$
+	\hat{z}_{i,j}^\prime 
+	= \frac{\delta z_{i,j} - \delta \mu_j}{\sqrt{\delta^2 \sigma_j^2 + \epsilon}}
+	\;\approx\; \frac{z_{i,j} - \mu_j}{\sqrt{\sigma_j^2 + \epsilon}}
+	= \hat{z}_{i,j}.
+	$$
 
 	The normalized outputs $\hat{z}_i$ remain unchanged, thus BN is invariant to scaling of a single weight vector.
 	
@@ -89,26 +98,53 @@ $$\hat{z}_{i,j} = \frac{z_{i,j} - \mu_j}{\sqrt{\sigma_j^2 + \epsilon}}$$
 	$$\mu’^{(i)} = \frac{1}{H} \left( \sum_{k \neq j} z_{i,k} + \delta z_{i,j} \right), \quad (\sigma'^{(i)})^2 \neq (\sigma^{i})^2$$
 	This implies LN is not invariant to individual weight scaling vectors.
 	
-	However, for entire weight matrix scaling $W \to \delta W$, then $\mathbf{z}_i \mapsto \delta \mathbf{z}_i$ and:
-	$$\mu’^{(i)} = \delta \mu^{(i)}, \quad (\sigma’^{(i)})^2 = \delta^2 (\sigma^{(i)})^2$$
+	However, for entire weight matrix scaling $W \mapsto \delta W$, we have 
+	$\mathbf{z}_i \mapsto \delta \mathbf{z}_i$ and
+	$$
+	\mu^{\prime (i)} = \delta \mu^{(i)}, 
+	\quad 
+	(\sigma^{\prime (i)})^2 = \delta^2 (\sigma^{(i)})^2.
+	$$
+
 	The normalized output remains unchanged,
-	$$\hat{z}_{i,j}’ \approx \hat{z}_{i,j}$$
-	
-	Thus LN is invariant to uniform scaling of the full weight matrix.
-	
-	For pre-activation shifts adding a constant vector $\mathbf{b} \in \mathbb{R}^H$ (identical for all neurons) to the pre-activations $\mathbf{z}$ leaves LN invariant for uniform shits, as the mean and variance adjust accordingly,
-	$$\mathbf{z}_i'=\mathbf{z}_i+\mathbf{b}$$
-	If $b_j= c$ for all $j$, then:
-	$$\mu'^{(i)}=\mu^{(i)}+c, \quad (\sigma'^{(i)})^2=(\sigma^{(i)})^2 \Rightarrow \hat{z}'_{i,j}=\hat{z}_{i,j}$$
-	LN is invariant to pre-activation uniform additive shifts.
+	$$
+	\hat{z}_{i,j}^\prime \;\approx\; \hat{z}_{i,j}.
+	$$
+
+	Thus, LN is invariant to uniform scaling of the full weight matrix.  
+
+	---
+
+	For pre-activation shifts, adding a constant vector 
+	$\mathbf{b} \in \mathbb{R}^H$ (identical for all neurons) to the pre-activations $\mathbf{z}$ leaves LN invariant for uniform shifts, since the mean and variance adjust accordingly:
+	$$
+	\mathbf{z}_i^\prime = \mathbf{z}_i + \mathbf{b}.
+	$$
+
+	If $b_j = c$ for all $j$, then
+	$$
+	\mu^{\prime (i)} = \mu^{(i)} + c, 
+	\quad 
+	(\sigma^{\prime (i)})^2 = (\sigma^{(i)})^2 
+	\;\Rightarrow\; 
+	\hat{z}_{i,j}^\prime = \hat{z}_{i,j}.
+	$$
+
+	Hence, LN is also invariant to uniform additive shifts in pre-activation.
 	
 	But for non uniform shift, $b_j \neq b_k$, then:
 	$$\mu'^{(i)} = \mu^{(i)} + \frac{1}{H} \sum_{j = 1}^H b_j, \quad (\sigma'^{(i)})^2 =\frac{1}{H}\sum_{j=1}^H (z_{i,j} + b_j - \mu'^{(i)})^2$$
 	The normalized outputs will change, thus LN is not invariant to arbitrary additive shifts.
 
 
-	For a weight shits, LN is invariant only if inputs are zero-mean,
-	$$\mathbf{z}'_i=W\mathbf{x}_i+\mathbf{b}(\mathbf{1}^{\top}\mathbf{x}_i)=W\mathbf{x}_i\Rightarrow\hat{z}'_{i,j}=\hat{z}_{i,j}$$
+	For weight shifts, LN is invariant only if inputs are zero-mean:
+	$$
+	\mathbf{z}_i^\prime 
+	= W \mathbf{x}_i + \mathbf{b}\,(\mathbf{1}^\top \mathbf{x}_i) 
+	= W \mathbf{x}_i 
+	\;\Rightarrow\; 
+	\hat{z}_{i,j}^\prime = \hat{z}_{i,j}.
+	$$
 	 
 	 Thus LN is invariant to full weight re-scaling and pre-activation weight re-centering, but they are not invariant to weight re-centering unless inputs are zero-mean. 
 
