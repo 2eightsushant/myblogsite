@@ -1,6 +1,6 @@
 +++
 title = "A note on 1st and 2nd order optimization"
-date = "2024-09-14"
+date = "2024-09-21"
 
 [taxonomies]
 tags=["optimization","optimizer","firstorder","secondorder","sgd"]
@@ -10,7 +10,9 @@ comment = true
 +++
 
 Optimization lies at the heart of training deep learning models, serving as the driving force behind the training of complex neural networks. The goal of optimization is to minimize a cost function $J(\theta)$.
-$$J(\theta)=\mathbb{E}_{(x,y)\sim \hat{p}_{data}}L(f(x;\theta),y),$$
+\[
+J(\theta)=\mathbb{E}_{(x,y)\sim \hat{p}_{data}} L(f(x;\theta),y),
+\]
 where $L$ is the per-example loss function, $f(x;\theta)$ is the predicted output when the input is $x$, and $\hat{p}_{data}$ is the empirical distribution. $J(\theta)$ is defined with respect to the training set. The expectation is taken across the data-generating distribution $p_{data}$ rather than just over the finite training set is given by:
 $$J^*(\theta) = \mathbb{E}_{x,y}\sim p_{data}L(f(x;\theta),y).
 $$
