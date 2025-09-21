@@ -72,10 +72,16 @@ In contrast, BN normalizes across the batch dimension (over examples) for each f
 1. Weight re-scaling and re-centering invariance
 	In BN, re-scaling the incoming weights of a single neuron doesn't effect the normalized output, since normalization is performed across the batch dimension. Whereas, LN behaves differently; LN is not invariant to re-scaling of individual weight vectors, i.e., rows of the weight matrix. But it is invariant to uniform re-scaling or shifting of the entire weight matrix.
 	
-	Let $W \in \mathbb{R}^{H \times D}$ be the weight matrix at layer $l$, and $\mathbf{x}_i \in \mathbb{R}^D$ be the input to the layer for example $i$. Then the pre-activation for neuron $j$ is
+	Let $W \in \mathbb{R}^{H \times D}$ be the weight matrix at layer $l$, and 
+	<div>
+	$$\mathbf{x}_i \in \mathbb{R}^D$$
+	</div>
+	 be the input to the layer for example $i$. Then the pre-activation for neuron $j$ is
+	<dif>
 	$$
 	z_{ij} = \mathbf{w}_j^\top \mathbf{x}_i,
 	$$
+	</div>
 	where $\mathbf{w}_j$ is the $j$-th row of $W$.
 
 	Scaling $\mathbf{w}_j \mapsto \delta \mathbf{w}_j$ implies that the pre-activation scales as
@@ -85,17 +91,21 @@ In contrast, BN normalizes across the batch dimension (over examples) for each f
 	
 	BN computes statistics over the batch $B$ for each neuron:
 	 $$\mu_j = \frac{1}{B} \sum_{i=1}^B z_{i,j}, \quad \sigma_j^2 = \frac{1}{B} \sum_{i=1}^B (z_{i,j} - \mu_j)^2$$
+	<div>
 	$$
 	\hat{z}_{i,j} = \frac{z_{i,j} - \mu_j}{\sqrt{\sigma_j^2 + \epsilon}}
 	$$
+	</div>
 
 	After scaling, the normalized output is
+	<div>
 	$$
 	\hat{z}_{i,j}^\prime 
 	= \frac{\delta z_{i,j} - \delta \mu_j}{\sqrt{\delta^2 \sigma_j^2 + \epsilon}}
 	\;\approx\; \frac{z_{i,j} - \mu_j}{\sqrt{\sigma_j^2 + \epsilon}}
 	= \hat{z}_{i,j}.
 	$$
+	</div>
 
 	The normalized outputs $\hat{z}_i$ remain unchanged, thus BN is invariant to scaling of a single weight vector.
 	
