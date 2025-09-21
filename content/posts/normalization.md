@@ -31,18 +31,21 @@ However, whitening all features jointly is computationally intensive and often n
     $$  
 
     where  
-
+	<div>
 	$$
 	\hat{\mathbf{x} }_i = \frac{\mathbf{x}_i - \mu_{\mathcal{B} } }{\sqrt{\sigma_{\mathcal{B} }^2 + \epsilon} }
 	$$
+	</div>
 
     $$
     \mu_\mathcal{B} = \frac{1}{m} \sum_{i=1}^m \mathbf{x}_i
     $$  
 
+	<div>
     $$
 	\sigma_{\mathcal{B} }^2 = \frac{1}{m} \sum_{i=1}^m \left( \mathbf{x}_i - \mu_{\mathcal{B} } \right)^2
 	$$
+	</div>
 	
 	These statistics are differentiable, enabling integration with backpropagation.
 
